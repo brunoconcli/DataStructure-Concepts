@@ -1,5 +1,4 @@
-package linkedList;
-
+package linkedLists;
 public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList, Cloneable {
     private Node<X> first, last;
     private int size = 0;
@@ -47,6 +46,14 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
     }
     public int getSize() {
         return this.size;
+    }
+    public X getElementAt(int index) throws Exception {
+        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
+        Node<X> current = this.first;
+        for (int i = 0; i < index; i ++) 
+            current = current.getNext();
+        
+        return current.getInfo();
     }
     @Override
     public boolean isEmpty() {
@@ -126,17 +133,16 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
     }
     @Override
     public String toString() {
-        StringBuilder ret = new StringBuilder();
+        StringBuilder message = new StringBuilder();
         for (Node<X> current = this.first; current != null; current = current.getNext()) {
             try {
-                ret.append(current.getInfo().toString());
-                if (current.getNext() != null) ret.append(", ");
+                message.append(current.getInfo().toString());
+                if (current.getNext() != null) message.append(", ");
 
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            } catch (Exception ignored) {}
         }
-        return ret.toString();
+
+        return message.toString();
     }
     @Override
     protected Object clone() throws CloneNotSupportedException {

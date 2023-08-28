@@ -1,6 +1,4 @@
-package linkedList;
-
-import java.util.LinkedList;
+package linkedLists;
 
 public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList, Cloneable {
     public Node<X> first, last;
@@ -25,7 +23,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         else
             this.last.setNext(this.first);
 
-        size ++;
+        this.size ++;
     }
     public void addLast(X info) throws Exception {
         if (info == null) throw new Exception ("Information passed must not be null");
@@ -33,7 +31,32 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         this.last.setNext(toBeInserted);
         this.last = toBeInserted;
 
-        size ++;
+        this.size ++;
+    }
+    public void addAfter(int index, X info) throws Exception {
+        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (\" + this.getSize() + \")");
+
+        if (index == this.getSize() - 1) {
+            this.addLast(info);
+            return;
+        }
+        
+        Node<X> current = this.first;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        current.setNext(new Node<X>(info, current.getNext()));
+
+        this.size++;
+    }
+    public X getElementAt(int index) throws Exception {
+        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
+
+        Node<X> current = this.first;
+        for (int i = 0; i < index; i++) 
+            current = current.getNext();
+        
+        return current.getInfo();
     }
     public int getSize() {
         return this.size;
@@ -47,6 +70,12 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
     }
     public void removeLast() throws Exception {
         this.removeInto(getSize() - 1);
+    }
+    public void removeFirstElementWithInfo(X info) {
+
+    }
+    public void removeAllElementsWithInfo(X info) {
+        
     }
     @Override
     public void removeInto(int index) throws Exception {
@@ -66,7 +95,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         }
         if (previous != null)
             previous.setNext(current.getNext());
-        size--;
+        this.size--;
     }
     @Override
     public void removeAllElements() {
@@ -109,7 +138,6 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         }
         catch (Exception ignored) {}
 
-
         return true;
     }
     @Override
@@ -124,7 +152,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
     }
     @Override
     public Object clone() throws CloneNotSupportedException {
-        Object clone = super.clone();
+        // Object clone = super.clone();
         LinkedListCircular<X> ret = null;
         try {
             ret = new LinkedListCircular<>(this);

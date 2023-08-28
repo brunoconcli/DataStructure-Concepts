@@ -1,4 +1,4 @@
-package linkedList;
+package linkedLists;
 public class Node <N>{
     private N info;
     private Node <N> next, prev;

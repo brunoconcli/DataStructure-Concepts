@@ -1,4 +1,4 @@
-package linkedList;
+package linkedLists;
 
 public class LinkedListOrdered<X> implements ILinkedList {
     public void addFirst(X info) {}
