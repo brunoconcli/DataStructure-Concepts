@@ -1,11 +1,12 @@
 package linkedLists;
 
-public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, Cloneable {
+public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
 
     private Node<X> first, last;
     private int size = 0;
 
     public LinkedListDoubly() {}
+
     public LinkedListDoubly(LinkedListDoubly<X> model) throws Exception {
         if (model == null) 
             throw new Exception("The model object passed cannot be null");
@@ -13,6 +14,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
         this.last = model.last;
         this.size = model.size;
     }
+
     public void addFirst(X info) throws Exception {
         if (info == null) throw new Exception("Information passed must not be null");
         
@@ -26,6 +28,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
 
         this.size++;
     }
+
     public void addLast(X info) throws Exception {
         if (info == null) throw new Exception("Information passed must not be null");
         this.last.setNext(new Node<X>(this.last, info));
@@ -37,6 +40,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
 
         this.size++;
     }
+
     public void addAfter(int index, X info) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
         
@@ -54,13 +58,24 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
 
         this.size++;
     }
+
     public int getSize() {
         return this.size;
     }
+
     @Override
     public boolean isEmpty() {
         return (this.getSize() == 0);
     }
+
+    public void removeFirst() throws Exception {
+        this.removeInto(0);
+    }
+
+    public void removeLast() throws Exception {
+        this.removeInto(this.getSize() -1);
+    }
+
     @Override
     public void removeInto(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
@@ -84,14 +99,23 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
         current.getNext().setPrev(current.getPrev());
         current = null;
 
-
         this.size--;
     }
+
     @Override
     public void removeAllElements() {
         this.first = this.last = null;
         this.size = 0;
     }
+
+    public void removeFirstElementWithInfo(X info) {
+
+    }
+
+    public void removeAllElementsWithInfo(X info) {
+
+    }
+
     @Override
     public String toString() {
         if (this.isEmpty())
@@ -107,6 +131,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
 
         return message.toString();
     }
+
     @Override
     public Object clone() {
         LinkedListDoubly<X> ret = null;
@@ -117,11 +142,13 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList, C
 
         return ret;
     }
+
     @Override
     public boolean equals(Object obj) {
         
         return true;
     }
+    
     @Override
     public int hashCode() {
         int hash = 2;

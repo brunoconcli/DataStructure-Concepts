@@ -1,5 +1,5 @@
 package linkedLists;
-public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList, Cloneable {
+public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
     private Node<X> first, last;
     private int size = 0;
 
@@ -23,6 +23,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         
         this.size++;
     }
+
     public void addLast(X info) {
         if (this.last == null) {
             this.last = new Node<X>(info);
@@ -35,6 +36,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
 
         this.size++;
     }
+
     public void addAfter(int index, X info) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
         Node<X> current = this.first;
@@ -44,9 +46,11 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         current.setNext(new Node<X>(info, current.getNext()));
         this.size++;
     }
+    
     public int getSize() {
         return this.size;
     }
+
     public X getElementAt(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
         Node<X> current = this.first;
@@ -55,16 +59,20 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         
         return current.getInfo();
     }
+
     @Override
     public boolean isEmpty() {
         return this.first == null;
     }
+
     public void removeFirst() throws Exception {
         this.removeInto(0);
     }
+
     public void removeLast() throws Exception {
         this.removeInto(this.getSize() - 1);
     }
+
     public void removeFirstElementWithInfo(X info) throws Exception {
         Node<X> current = this.first, previous = null;
         while (current.getInfo() != info) {
@@ -77,6 +85,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         current = null;
         this.size--;
     }
+
     public void removeAllElementsWithInfo(X info) throws Exception {
         Node<X> current = this.first, previous = null;
         for (int i = 0; i < this.getSize(); i++) {
@@ -101,6 +110,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
             current = current.getNext();
         }
     }
+
     @Override
     public void removeInto(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
@@ -126,11 +136,13 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         }
         this.size--;
     }
+
     @Override
     public void removeAllElements() {
         this.first = this.last = null;
         this.size = 0;
     }
+
     @Override
     public String toString() {
         StringBuilder message = new StringBuilder();
@@ -144,10 +156,9 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
 
         return message.toString();
     }
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Object clone = super.clone();
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
         LinkedListUnordered<X> ret = null;
         try {
             ret = new LinkedListUnordered<>(this);
@@ -155,7 +166,9 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         catch (Exception ignored) {}
         return ret;
     }
+
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
@@ -179,6 +192,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
         catch(Exception ignored) {}
         return true;
     }
+    
     @Override
     public int hashCode() {
         int hash = 2;

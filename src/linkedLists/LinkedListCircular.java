@@ -1,6 +1,6 @@
 package linkedLists;
 
-public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList, Cloneable {
+public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
     public Node<X> first, last;
     int size = 0;
     public LinkedListCircular() {}
@@ -25,6 +25,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
 
         this.size ++;
     }
+    
     public void addLast(X info) throws Exception {
         if (info == null) throw new Exception ("Information passed must not be null");
         Node<X> toBeInserted = new Node<X>(info, this.first);
@@ -33,6 +34,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
 
         this.size ++;
     }
+
     public void addAfter(int index, X info) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (\" + this.getSize() + \")");
 
@@ -49,6 +51,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
 
         this.size++;
     }
+
     public X getElementAt(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
 
@@ -58,25 +61,32 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         
         return current.getInfo();
     }
+
     public int getSize() {
         return this.size;
     }
+
     @Override
     public boolean isEmpty() {
         return this.first == null;
     }
+
     public void removeFirst() throws Exception {
         this.removeInto(0);
     }
+
     public void removeLast() throws Exception {
         this.removeInto(getSize() - 1);
     }
+
     public void removeFirstElementWithInfo(X info) {
 
     }
+
     public void removeAllElementsWithInfo(X info) {
         
     }
+
     @Override
     public void removeInto(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (\" + this.getSize() + \")");
@@ -97,11 +107,13 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
             previous.setNext(current.getNext());
         this.size--;
     }
+
     @Override
     public void removeAllElements() {
         this.last = this.first = null;
         size = 0;
     }
+
     @Override 
     public String toString() {
         StringBuilder message = new StringBuilder();
@@ -116,7 +128,9 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         catch (Exception ignored) {}
         return message.toString();
     }
+
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
@@ -140,6 +154,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
 
         return true;
     }
+
     @Override
     public int hashCode() {
         int hash = 2;
@@ -150,6 +165,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList,
         if (hash < 0) hash *= -1;
         return hash;
     }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         // Object clone = super.clone();
