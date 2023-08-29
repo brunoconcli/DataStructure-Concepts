@@ -1,5 +1,6 @@
 import linkedLists.LinkedListUnordered;
 import linkedLists.LinkedListDoubly;
+import linkedLists.LinkedListOrdered;
 import linkedLists.LinkedListCircular;
 
 public class Main  {
@@ -8,22 +9,11 @@ public class Main  {
             LinkedListUnordered<String> uno = new LinkedListUnordered<>();
             LinkedListCircular<String> dos = new LinkedListCircular<>();
             LinkedListDoubly<String> tres = new LinkedListDoubly<>();
+            LinkedListOrdered<Integer> cuatro = new LinkedListOrdered<>();
 
-            uno.addFirst("A");
-            uno.addLast("B");
-            uno.addLast("C");
-            System.out.println(uno.toString());
-            dos.addFirst("A");
-            dos.addLast("B");
-            dos.addLast("C");
-
-            tres.addFirst("X");
-            tres.addLast("Z");
-            tres.addAfter(0, "Y");
-            tres.addFirst("W");
-            tres.addAfter(3, "A");
-            System.out.println(tres.toString());
-
+            cuatro.add(1);
+            cuatro.add(2);
+            System.out.println(cuatro.toString());
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
