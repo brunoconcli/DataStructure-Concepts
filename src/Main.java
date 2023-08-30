@@ -1,23 +1,29 @@
-import linkedLists.LinkedListUnordered;
-import linkedLists.LinkedListDoubly;
-import linkedLists.LinkedListOrdered;
-import linkedLists.LinkedListCircular;
+import linkedLists.*;
 
 public class Main  {
-    public static void main(String[] args) {
-        try {
-            LinkedListUnordered<String> uno = new LinkedListUnordered<>();
-            LinkedListCircular<String> dos = new LinkedListCircular<>();
-            LinkedListDoubly<String> tres = new LinkedListDoubly<>();
-            LinkedListOrdered<Integer> cuatro = new LinkedListOrdered<>();
+	@SuppressWarnings("unchecked")
+	public static void main(String[] args) {
+		try {
+			LinkedListUnordered<String> uno = new LinkedListUnordered<>();
+			LinkedListCircular<String> dos = new LinkedListCircular<>();
+			LinkedListDoubly<String> tres = new LinkedListDoubly<>();
+			LinkedListOrdered<Integer> cuatro = new LinkedListOrdered<>();
+		
+			LinkedListDoublyCircular<String> cinqo = new LinkedListDoublyCircular<>();
+			cinqo.addFirst("C");
+			System.out.println(cinqo.toString());
 
-            cuatro.add(1);
-            cuatro.add(2);
-            System.out.println(cuatro.toString());
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+			cinqo.addFirst("B");
+			System.out.println(cinqo.toString());
 
+			cinqo.addLast("D");
+			System.out.println(cinqo.toString());
+
+			cinqo.addFirst("A");
+			System.out.println(cinqo.toString());
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
