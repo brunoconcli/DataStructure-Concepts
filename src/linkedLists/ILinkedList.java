@@ -1,9 +1,9 @@
 package linkedLists;
 
 public interface ILinkedList<X> {
-    public int getSize();
-
     public boolean isEmpty();
+    
+    public int getSize();
 
     public void removeInto(int index) throws Exception;
 
