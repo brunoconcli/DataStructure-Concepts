@@ -4,7 +4,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
     private int size = 0;
 
     public LinkedListUnordered() {}
-    public LinkedListUnordered(LinkedListUnordered<X> model) throws Exception {
+    protected LinkedListUnordered(LinkedListUnordered<X> model) throws Exception {
         if (model == null)
             throw new Exception("Model list in copy constructor cannot be null");
         this.first = model.first;
