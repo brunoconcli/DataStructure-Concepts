@@ -5,9 +5,13 @@ import linkedLists.Node;
 
 public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinkedList, Cloneable {
     
-	Node<X> first, last;
-	int size = 0;
-	public LinkedListDoublyCircular() {}
+	private Node<X> first, last;
+	private int size;
+	public LinkedListDoublyCircular() {
+		this.first = null;
+		this.last = null;
+		this.size = 0;
+	}
 
 	public LinkedListDoublyCircular(LinkedListDoublyCircular<X> model) throws Exception {
 		if (model == null) 
@@ -20,12 +24,11 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 	public void addFirst(X info) throws Exception {
 		if (info == null) throw new Exception("The information passed must not be null");
 	
-		this.first = new Node<X>(info, this.first);
+		this.first = new Node<X>(this.last, info, this.first);
 	
-		if (this.getSize() != 0) {
+		if (this.size != 0) {
 			this.first.getNext().setPrev(this.first);
 			this.last.setNext(this.first);
-			this.first.setPrev(this.last);
 		}
 			
 		else {
@@ -39,39 +42,40 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 		if (info == null) 
 			throw new Exception("The information passed must not be null");
 		
-		if (this.getSize() != 0) {
+		if (this.size != 0) {
 			this.last.setNext(new Node<X>(this.last, info, this.first));
 			this.last = this.last.getNext();
 			this.first.setPrev(this.last);
 		}
-		else if (this.last == this.first) {
-			this.first = new Node<X>(info, this.first);
-			this.last = this.first;
-		}
+		else
+			this.last = this.first = new Node<X>(info, this.first);
 		
 		this.size++;
 	}
 	
 	public void addAfter(int index, X info) throws Exception {
-		if (index < 0 || index >= this.getSize())
-			throw new Exception ("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
+		if (index < 0 || index >= this.size)
+			throw new Exception ("Index passed must be between 0 and the list's length (" + this.size + ")");
 		if (info == null) 
 			throw new Exception ("Information passed must not be null");
 		
-		if (index == 0) 
+		if (index == 0) {
 			this.addFirst(info);
+			return;
+		}
 		
-		if (index == this.getSize()-1) 
+		if (index == this.size-1) {
 			this.addLast(info);
+			return;
+		} 
 		
-		Node<X> toInsert = new Node<X>(info), current = this.first, next = null;
+		Node<X> current = this.first, next = null;
 		for (int i = 0; i < index; i++)
 			current = current.getNext();
 		
 		next = current.getNext();
 
-		toInsert.setPrev(current);
-		toInsert.setNext(next);
+		Node<X> toInsert = new Node<X>(current, info, next);
 		
 		current.setNext(toInsert);
 		next.setPrev(toInsert);
@@ -90,13 +94,13 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 	}
 
 	public X getElementAt(int index) throws Exception {
-		if (index < 0 || index >= this.getSize())
+		if (index < 0 || index >= this.size)
 			throw new Exception("The index passed must be between 0 and the list's length (" + this.getSize() + ")");
 
 		Node<X> current = this.first;
-		for (int i = 0; i < index; i++) {
+		for (int i = 0; i < index; i++) 
 			current = current.getNext();
-		}
+		
 		return current.getInfo();
 	}
 
@@ -153,17 +157,16 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 	@Override
 	public String toString() {
     		StringBuilder message = new StringBuilder();
-		try {
-			Node<X> current;
-			for(current = this.first; current != this.last; current = current.getNext()) {
+		try { 
+			Node<X> current = this.first;
+			for(; current != this.last; current = current.getNext()) {
 				message.append(current.getInfo());
 				message.append(", ");
 			}
-			message.append(current.getInfo());
+			if (this.size != 0)
+				message.append(current.getInfo());
 		}
-		catch (Exception e) {
-			e.getMessage();
-		}
+		catch (Exception ignored) {}
 
 		return message.toString();
 	}
@@ -172,11 +175,10 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 	public Object clone() {
 		LinkedListDoublyCircular<X> ret = null;
 		try {
-	    		ret = new LinkedListDoublyCircular<X>(this);
+	    	ret = new LinkedListDoublyCircular<X>(this);
 		}
-		catch (Exception e) {
-	    		e.getMessage();
-		}
+		catch (Exception ignored) {}
+
 		return ret;
 	}
 	
@@ -189,34 +191,38 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 		if (this.getClass() != obj.getClass()) return false;
 
 		try {
-
 			LinkedListDoublyCircular<X> data = (LinkedListDoublyCircular<X>) obj;
-			if (this.first.getInfo() != data.first.getInfo()) return false;
-			if (this.last.getInfo() != data.last.getInfo()) return false;
 			if (this.size != data.size) return false;
+			if (!this.first.getInfo().equals(data.first.getInfo())) return false;
+			if (!this.last.getInfo().equals(data.last.getInfo())) return false;
 
-			Node<X> currentThis = this.first, currentData = data.first;
-			for (int i = 0; i < this.getSize(); i++) {
-				if (currentThis.getInfo() != currentData.getInfo()) return false;
+			Node<X> currentThis = this.first.getNext(), currentData = data.first.getNext();
+			for (int i = 1; i < this.size -1; i++) {
+				if (!currentThis.getInfo().equals(currentData.getInfo())) return false;
 				currentThis = currentThis.getNext();
 				currentData = currentData.getNext();
 			}
 		}
-		catch (Exception e) {
-			e.getMessage();
-		}
+		catch(Exception ignored) {}
+
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 2;
-		
-		if (this.first != null) hash = 3*hash + this.first.hashCode();
-		if (this.last != null) hash = 3*hash + this.last.hashCode();
+		if (this.first != null) {
+			Node<X> current = this.first;
+			do {
+				hash = 3*hash + current.getInfo().hashCode();
+				current = current.getNext();
+			}
+			while(current != this.first);
+		}
+
 		hash = 3*hash + Integer.valueOf(this.size).hashCode();
 		
 		if (hash < 0) hash = -hash;
 		return hash;
-    	}
+    }
 }
