@@ -1,10 +1,10 @@
 package linkedLists;
-public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
+public class LinkedList<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
     private Node<X> first, last;
     private int size = 0;
 
-    public LinkedListUnordered() {}
-    protected LinkedListUnordered(LinkedListUnordered<X> model) throws Exception {
+    public LinkedList() {}
+    protected LinkedList(LinkedList<X> model) throws Exception {
         if (model == null)
             throw new Exception("Model list in copy constructor cannot be null");
         this.first = model.first;
@@ -159,9 +159,9 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        LinkedListUnordered<X> ret = null;
+        LinkedList<X> ret = null;
         try {
-            ret = new LinkedListUnordered<>(this);
+            ret = new LinkedList<>(this);
         }
         catch (Exception ignored) {}
         return ret;
@@ -175,7 +175,7 @@ public class LinkedListUnordered<X extends Comparable<X>> implements ILinkedList
 
         if (this.getClass() != obj.getClass()) return false;
 
-        LinkedListUnordered<X> data = (LinkedListUnordered<X>)obj;
+        LinkedList<X> data = (LinkedList<X>)obj;
 
         try {
             if (!this.first.getInfo().equals(data.first.getInfo())) return false;
