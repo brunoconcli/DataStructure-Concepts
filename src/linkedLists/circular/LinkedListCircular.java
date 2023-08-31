@@ -1,4 +1,7 @@
-package linkedLists;
+package linkedLists.circular;
+
+import linkedLists.ILinkedList;
+import linkedLists.Node;
 
 public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
     public Node<X> first, last;
@@ -29,6 +32,11 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<
     public void addLast(X info) throws Exception {
         if (info == null) throw new Exception ("Information passed must not be null");
         Node<X> toBeInserted = new Node<X>(info, this.first);
+        
+        if (this.first == null) {
+            this.addFirst(info);
+            return;
+        }
         this.last.setNext(toBeInserted);
         this.last = toBeInserted;
 
@@ -168,7 +176,6 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        // Object clone = super.clone();
         LinkedListCircular<X> ret = null;
         try {
             ret = new LinkedListCircular<>(this);

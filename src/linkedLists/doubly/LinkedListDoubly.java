@@ -1,4 +1,7 @@
-package linkedLists;
+package linkedLists.doubly;
+
+import linkedLists.ILinkedList;
+import linkedLists.Node;
 
 public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
 
@@ -31,13 +34,16 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
 
     public void addLast(X info) throws Exception {
         if (info == null) throw new Exception("Information passed must not be null");
-        this.last.setNext(new Node<X>(this.last, info));
-        this.last = this.last.getNext();
+        
+        if (this.first == null) {
+            this.addFirst(info);
+            return;
+        }
+        else {
+            this.last.setNext(new Node<X>(this.last, info));
+            this.last = this.last.getNext();
+        }
     
-
-        if (this.first == null)
-            this.first = this.last;
-
         this.size++;
     }
 
@@ -61,6 +67,17 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
 
     public int getSize() {
         return this.size;
+    }
+
+    public X getElementAt(int index) throws Exception {
+        if (index < 0 || index >= this.getSize())
+            throw new Exception ("The index passed must be between 0 and the list's length (" + this.getSize() + ")");
+        Node<X> current = this.first;
+        for (int i = 0;i < index; i++) {
+            current = current.getNext();
+        }
+
+        return current.getInfo();
     }
 
     @Override
@@ -145,7 +162,27 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
 
     @Override
     public boolean equals(Object obj) {
-        
+        if (this == obj) return true;
+        if (obj == null) return false;
+
+        if (this.getClass() != obj.getClass()) return false;
+
+        try {
+            LinkedListDoubly<X> data = (LinkedListDoubly<X>) obj;
+            if (!this.first.getInfo().equals(data.first.getInfo())) return false; // should it be !equals() or !=?
+            if (!this.last.getInfo().equals(data.last.getInfo())) return false;
+            if (this.size != data.size) return false;
+
+            Node<X> currentThis = this.first, currentData = data.first;
+            for (int i = 0; i< this.getSize(); i++) {
+                if (!currentThis.getInfo().equals(currentData.getInfo())) return false;
+                currentThis = currentThis.getNext();
+                currentData = currentData.getNext();
+            }
+        }
+        catch (Exception e) {
+            e.getMessage();
+        }
         return true;
     }
     
@@ -153,6 +190,11 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
     public int hashCode() {
         int hash = 2;
         
+        hash = 3*hash + this.first.hashCode();
+        hash = 3*hash + this.last.hashCode();
+        hash = 3*hash + Integer.valueOf(this.size).hashCode();
+
+        if (hash < 0) hash = -hash;
         return hash;
     }
 }
