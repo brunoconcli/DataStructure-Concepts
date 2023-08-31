@@ -1,4 +1,7 @@
 import linkedLists.*;
+import linkedLists.circular.LinkedListCircular;
+import linkedLists.circular.LinkedListDoublyCircular;
+import linkedLists.doubly.LinkedListDoubly;
 
 public class Main  {
 	@SuppressWarnings("unchecked")
@@ -10,17 +13,22 @@ public class Main  {
 			LinkedListOrdered<Integer> cuatro = new LinkedListOrdered<>();
 		
 			LinkedListDoublyCircular<String> cinqo = new LinkedListDoublyCircular<>();
-			cinqo.addFirst("C");
-			System.out.println(cinqo.toString());
+			LinkedListDoublyCircular<String> cinqoCopy = new LinkedListDoublyCircular<>();			
 
 			cinqo.addFirst("B");
-			System.out.println(cinqo.toString());
-
-			cinqo.addLast("D");
-			System.out.println(cinqo.toString());
-
 			cinqo.addFirst("A");
-			System.out.println(cinqo.toString());
+			cinqo.addLast("C");
+
+			cinqoCopy.addLast("A");
+			cinqoCopy.addLast("B");
+			cinqoCopy.addLast("C");
+			
+			System.out.println(
+				"cinqo: " + cinqo.toString() + 
+				"\ncinqoCopy: " + cinqoCopy.toString() +
+				"\nequals: " + cinqo.equals(cinqoCopy) +
+				"\nelement at 1:" + cinqo.getElementAt(1)
+			);
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
