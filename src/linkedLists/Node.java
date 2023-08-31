@@ -72,5 +72,17 @@ public class Node <N>{
 
         return true;
     }
+
+	@Override
+	public int hashCode() {
+		int hash = 2;
+		
+		hash = 3*hash + this.info.hashCode();	
+        hash = 3*hash + this.next.hashCode();
+        hash = 3*hash + this.prev.hashCode();
+	
+		if (hash < 0) hash = -hash;
+		return hash;
+    }
 }
 
