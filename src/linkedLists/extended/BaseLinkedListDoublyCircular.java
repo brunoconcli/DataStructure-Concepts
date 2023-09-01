@@ -1,19 +1,19 @@
-package linkedLists.circular;
+package linkedLists.extended;
 
 import linkedLists.ILinkedList;
 import linkedLists.Node;
 
-public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinkedList, Cloneable {
+public class BaseLinkedListDoublyCircular<X> implements ILinkedList<X>, Cloneable {
     
-	private Node<X> first, last;
-	private int size;
-	public LinkedListDoublyCircular() {
+	protected Node<X> first, last;
+	protected int size;
+	public BaseLinkedListDoublyCircular() {
 		this.first = null;
 		this.last = null;
 		this.size = 0;
 	}
 
-	public LinkedListDoublyCircular(LinkedListDoublyCircular<X> model) throws Exception {
+	public BaseLinkedListDoublyCircular(BaseLinkedListDoublyCircular<X> model) throws Exception {
 		if (model == null) 
 			throw new Exception ("Model object passed must not be null");
 		this.first = model.first;
@@ -173,9 +173,9 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 
 	@Override
 	public Object clone() {
-		LinkedListDoublyCircular<X> ret = null;
+		BaseLinkedListDoublyCircular<X> ret = null;
 		try {
-	    	ret = new LinkedListDoublyCircular<X>(this);
+	    	ret = new BaseLinkedListDoublyCircular<X>(this);
 		}
 		catch (Exception ignored) {}
 
@@ -191,7 +191,7 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 		if (this.getClass() != obj.getClass()) return false;
 
 		try {
-			LinkedListDoublyCircular<X> data = (LinkedListDoublyCircular<X>) obj;
+			BaseLinkedListDoublyCircular<X> data = (BaseLinkedListDoublyCircular<X>) obj;
 			if (this.size != data.size) return false;
 			if (!this.first.getInfo().equals(data.first.getInfo())) return false;
 			if (!this.last.getInfo().equals(data.last.getInfo())) return false;
@@ -211,14 +211,17 @@ public class LinkedListDoublyCircular<X extends Comparable<X>> implements ILinke
 	@Override
 	public int hashCode() {
 		int hash = 2;
-		if (this.first != null) {
-			Node<X> current = this.first;
-			do {
-				hash = 3*hash + current.getInfo().hashCode();
-				current = current.getNext();
+		try {
+			if (this.first != null) {
+				Node<X> current = this.first;
+				do {
+					hash = 3*hash + current.getInfo().hashCode();
+					current = current.getNext();
+				}
+				while(current != this.first);
 			}
-			while(current != this.first);
 		}
+		catch (Exception ignored) {}
 
 		hash = 3*hash + Integer.valueOf(this.size).hashCode();
 		

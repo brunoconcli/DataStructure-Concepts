@@ -1,50 +1,70 @@
-package linkedLists;
-public class LinkedList<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
-    private Node<X> first, last;
-    private int size = 0;
+package linkedLists.extended;
+import linkedLists.*; // put class Node inside each class
+public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
+    protected class Node <N>{
+        private N info;
+        private Node <N> next;
+        public Node (N info) {
+            this.info = info;
+            this.next = null;
+        }
+        public Node (N info, Node <N> next) {
+            this.info = info;
+            this.next = next;
+        }
+        public N getInfo() throws Exception {
+            if (this.info == null)
+                throw new Exception("Node is empty");
+            return this.info;
+        }
+        public Node<N> getNext() {
+            return this.next;
+        }
+        public void setInfo(N info) {
+            this.info = info;
+        }
+        public void setNext(Node <N> next) {
+            this.next = next;
+        }
+        @Override
+        public String toString() {
+            String message = "";
+            try {
+                message += getInfo() + " -> " + null;
+                if (getNext() != null)
+                    message = getInfo() + " -> " + getNext().getInfo();
+            }
+            catch (Exception e) { System.out.println(e.getMessage()); }
 
-    public LinkedList() {}
-    protected LinkedList(LinkedList<X> model) throws Exception {
+
+            return message;
+        }
+        @Override
+        @SuppressWarnings("unchecked")
+        public boolean equals(Object obj) {
+            if (obj == null) return false;
+            if (this == obj) return true;
+
+            if (this.getClass() != obj.getClass()) return false;
+
+            Node<N> data = (Node<N>)obj;
+            if (this.info != data.info) return false;
+            if (this.next != data.next) return false;
+
+            return true;
+        }
+    }
+
+    protected Node<X> first, last;
+    protected int size = 0;
+
+    public BaseLinkedList() {}
+    protected BaseLinkedList(BaseLinkedList<X> model) throws Exception {
         if (model == null)
             throw new Exception("Model list in copy constructor cannot be null");
         this.first = model.first;
         this.last = model.last;
         this.size = model.size;
-    }
-
-    public void addFirst(X info) throws Exception {
-        if (info == null)
-            throw new Exception("Information passed must not be null");
-
-        this.first = new Node <X> (info, this.first);
-
-        if (this.last==null)
-            this.last = this.first;
-        
-        this.size++;
-    }
-
-    public void addLast(X info) {
-        if (this.last == null) {
-            this.last = new Node<X>(info);
-            this.first = this.last;
-        }
-        else {
-            this.last.setNext(new Node<X>(info));
-            this.last = this.last.getNext();
-        }
-
-        this.size++;
-    }
-
-    public void addAfter(int index, X info) throws Exception {
-        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
-        Node<X> current = this.first;
-        for (int i = 0; i < index; i ++) {
-            current = current.getNext();
-        }
-        current.setNext(new Node<X>(info, current.getNext()));
-        this.size++;
     }
     
     public int getSize() {
@@ -159,9 +179,9 @@ public class LinkedList<X extends Comparable<X>> implements ILinkedList<X>, Clon
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        LinkedList<X> ret = null;
+        BaseLinkedList<X> ret = null;
         try {
-            ret = new LinkedList<>(this);
+            ret = new BaseLinkedList<>(this);
         }
         catch (Exception ignored) {}
         return ret;
@@ -175,7 +195,7 @@ public class LinkedList<X extends Comparable<X>> implements ILinkedList<X>, Clon
 
         if (this.getClass() != obj.getClass()) return false;
 
-        LinkedList<X> data = (LinkedList<X>)obj;
+        BaseLinkedList<X> data = (BaseLinkedList<X>)obj;
 
         try {
             if (!this.first.getInfo().equals(data.first.getInfo())) return false;

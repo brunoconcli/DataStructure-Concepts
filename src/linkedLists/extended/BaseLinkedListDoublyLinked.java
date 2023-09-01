@@ -1,68 +1,109 @@
-package linkedLists.doubly;
+package linkedLists.extended;
 
 import linkedLists.ILinkedList;
-import linkedLists.Node;
 
-public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
+public class BaseLinkedListDoublyLinked<X> implements ILinkedList<X>, Cloneable {
 
-    private Node<X> first, last;
-    private int size = 0;
+    protected class Node <N>{
+        private N info;
+        private Node <N> next, prev;
+        public Node (N info) {
+            this.info = info;
+            this.next = null;
+            this.prev = null;
+        }
+        public Node (Node<N> prev, N info) {
+            this.prev = prev;
+            this.info = info;
+            this.next = null;
+        }
+        public Node (N info, Node <N> next) {
+            this.prev = null;
+            this.info = info;
+            this.next = next;
+        }
+        public Node (Node<N> prev, N info, Node<N> next) {
+            this.prev = prev;
+            this.info = info;
+            this.next = next;
+        }
+        public N getInfo() throws Exception {
+            if (this.info == null)
+                throw new Exception("Node is empty");
+            return this.info;
+        }
+        public Node<N> getNext() {
+            return this.next;
+        }
+        public Node<N> getPrev() {
+            return this.prev;
+        }
+        public void setInfo(N info) {
+            this.info = info;
+        }
+        public void setNext(Node <N> next) {
+            this.next = next;
+        }
+        public void setPrev(Node<N> prev) {
+            this.prev = prev;
+        }
+        @Override
+        public String toString() {
+            String message = "";
+            try {
+                message += getInfo() + " -> " + null;
+                if (getNext() != null)
+                    message = getInfo() + " -> " + getNext().getInfo();
+                if (getPrev() != null)
+                    message = getPrev().getInfo() + " -> " + message;
+            }
+            catch (Exception e) { System.out.println(e.getMessage()); }
+    
+    
+            return message;
+        }
+        @Override
+        @SuppressWarnings("unchecked")
+        public boolean equals(Object obj) {
+            if (obj == null) return false;
+            if (this == obj) return true;
+    
+            if (this.getClass() != obj.getClass()) return false;
+    
+            Node<N> data = (Node<N>)obj;
+            if (this.prev != data.prev) return false;
+            if (this.info != data.info) return false;
+            if (this.next != data.next) return false;
+    
+            return true;
+        }
+    
+        @Override
+        public int hashCode() {
+            int hash = 2;
+            
+            hash = 3*hash + this.info.hashCode();	
+            if (this.next != null) hash = 3*hash + this.next.hashCode();
+            if (this.prev != null) hash = 3*hash + this.prev.hashCode();
+        
+            if (hash < 0) hash = -hash;
+            return hash;
+        }
+    }
+    
+    
 
-    public LinkedListDoubly() {}
+    protected Node<X> first, last;
+    protected int size = 0;
 
-    public LinkedListDoubly(LinkedListDoubly<X> model) throws Exception {
+    public BaseLinkedListDoublyLinked() {}
+
+    public BaseLinkedListDoublyLinked(BaseLinkedListDoublyLinked<X> model) throws Exception {
         if (model == null) 
             throw new Exception("The model object passed cannot be null");
         this.first = model.first;
         this.last = model.last;
         this.size = model.size;
-    }
-
-    public void addFirst(X info) throws Exception {
-        if (info == null) throw new Exception("Information passed must not be null");
-        
-        this.first = new Node<X>(info, this.first);
-        
-        if (this.getSize() != 0)
-            this.first.getNext().setPrev(this.first);
-        
-        if (this.last == null)
-            this.last = this.first;
-
-        this.size++;
-    }
-
-    public void addLast(X info) throws Exception {
-        if (info == null) throw new Exception("Information passed must not be null");
-        
-        if (this.first == null) {
-            this.addFirst(info);
-            return;
-        }
-        else {
-            this.last.setNext(new Node<X>(this.last, info));
-            this.last = this.last.getNext();
-        }
-    
-        this.size++;
-    }
-
-    public void addAfter(int index, X info) throws Exception {
-        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
-        
-        if (index == this.getSize() - 1) {
-            this.addLast(info);
-            return;
-        }
-        Node<X> current = this.first, added = null;
-        for (int i = 0; i < index; i++) {
-            current = current.getNext();
-        }
-        current.setNext(new Node<X>(current, info, current.getNext()));
-        added = current.getNext();
-        added.getNext().setPrev(added);
-
-        this.size++;
     }
 
     public int getSize() {
@@ -151,9 +192,9 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
 
     @Override
     public Object clone() {
-        LinkedListDoubly<X> ret = null;
+        BaseLinkedListDoublyLinked<X> ret = null;
         try {
-            ret = new LinkedListDoubly<>(this);
+            ret = new BaseLinkedListDoublyLinked<>(this);
         }
         catch(Exception ignored) {}
 
@@ -161,6 +202,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
@@ -168,7 +210,7 @@ public class LinkedListDoubly<X extends Comparable<X>> implements ILinkedList<X>
         if (this.getClass() != obj.getClass()) return false;
 
         try {
-            LinkedListDoubly<X> data = (LinkedListDoubly<X>) obj;
+            BaseLinkedListDoublyLinked<X> data = (BaseLinkedListDoublyLinked<X>) obj;
             if (!this.first.getInfo().equals(data.first.getInfo())) return false; // should it be !equals() or !=?
             if (!this.last.getInfo().equals(data.last.getInfo())) return false;
             if (this.size != data.size) return false;

@@ -1,6 +1,6 @@
-package linkedLists;
-
-public class LinkedListOrdered<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
+package linkedLists.ordered;
+import linkedLists.extended.BaseLinkedList;
+public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X> {
 
     private Node<X> first, last;
     private int size = 0;
@@ -30,54 +30,6 @@ public class LinkedListOrdered<X extends Comparable<X>> implements ILinkedList<X
         // for (Node<X> current = this.first; current != null; current = current.getNext()) {
         //     if (current.getInfo().compareTo(info) )
         // }
-    }
-
-    @Override
-    public int getSize() {
-        return this.size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void removeInto(int index) {
-
-    }
-
-    @Override
-    public void removeAllElements() {
-
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder message = new StringBuilder();
-
-        try {
-            for (Node<X> current = this.first; current != null; current = current.getNext()) {
-                message.append(current.getInfo());
-                if (current.getNext() != null) message.append(", ");
-            }
-        }
-        catch (Exception ignored) {}
-
-        return message.toString();
-    }
-
-    @Override
-    public Object clone() {
-        LinkedListOrdered<X> ret = null;
-        try {
-            Object clone = super.clone();
-            ret = new LinkedListOrdered<>(this);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return ret;
     }
 
 }

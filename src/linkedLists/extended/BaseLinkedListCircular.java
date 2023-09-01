@@ -1,63 +1,72 @@
-package linkedLists.circular;
+package linkedLists.extended;
 
 import linkedLists.ILinkedList;
-import linkedLists.Node;
 
-public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<X>, Cloneable {
-    public Node<X> first, last;
-    int size = 0;
-    public LinkedListCircular() {}
-    public LinkedListCircular(LinkedListCircular<X> model) throws Exception {
+public class BaseLinkedListCircular<X> implements ILinkedList<X>, Cloneable {
+    
+    protected class Node <N>{
+        private N info;
+        private Node <N> next;
+        public Node (N info) {
+            this.info = info;
+            this.next = null;
+        }
+        public Node (N info, Node <N> next) {
+            this.info = info;
+            this.next = next;
+        }
+        public N getInfo() throws Exception {
+            if (this.info == null)
+                throw new Exception("Node is empty");
+            return this.info;
+        }
+        public Node<N> getNext() {
+            return this.next;
+        }
+        public void setInfo(N info) {
+            this.info = info;
+        }
+        public void setNext(Node <N> next) {
+            this.next = next;
+        }
+        @Override
+        public String toString() {
+            String message = "";
+            try {
+                message += getInfo() + " -> " + null;
+                if (getNext() != null)
+                    message = getInfo() + " -> " + getNext().getInfo();
+            }
+            catch (Exception e) { System.out.println(e.getMessage()); }
+
+
+            return message;
+        }
+        @Override
+        @SuppressWarnings("unchecked")
+        public boolean equals(Object obj) {
+            if (obj == null) return false;
+            if (this == obj) return true;
+
+            if (this.getClass() != obj.getClass()) return false;
+
+            Node<N> data = (Node<N>)obj;
+            if (this.info != data.info) return false;
+            if (this.next != data.next) return false;
+
+            return true;
+        }
+    }
+    
+    protected Node<X> first, last;
+    protected int size = 0;
+    public BaseLinkedListCircular() {}
+    public BaseLinkedListCircular(BaseLinkedListCircular<X> model) throws Exception {
         if (model == null)
             throw new Exception ("Model passed cannot be null");
         this.first = model.first;
         this.last = model.last;
         this.size = model.size;
-    }
-
-    public void addFirst(X info) throws Exception {
-        if (info == null)
-            throw new Exception ("Information passed must not be null");
-
-        this.first = new Node<X>(info, this.first);
-
-        if (this.last == null)
-            this.last = this.first;
-        else
-            this.last.setNext(this.first);
-
-        this.size ++;
-    }
-    
-    public void addLast(X info) throws Exception {
-        if (info == null) throw new Exception ("Information passed must not be null");
-        Node<X> toBeInserted = new Node<X>(info, this.first);
-        
-        if (this.first == null) {
-            this.addFirst(info);
-            return;
-        }
-        this.last.setNext(toBeInserted);
-        this.last = toBeInserted;
-
-        this.size ++;
-    }
-
-    public void addAfter(int index, X info) throws Exception {
-        if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (\" + this.getSize() + \")");
-
-        if (index == this.getSize() - 1) {
-            this.addLast(info);
-            return;
-        }
-        
-        Node<X> current = this.first;
-        for (int i = 0; i < index; i++) {
-            current = current.getNext();
-        }
-        current.setNext(new Node<X>(info, current.getNext()));
-
-        this.size++;
     }
 
     public X getElementAt(int index) throws Exception {
@@ -144,7 +153,7 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<
         if (obj == null) return false;
 
         if (this.getClass() != obj.getClass());
-        LinkedListCircular<X> data = (LinkedListCircular<X>) obj;
+        BaseLinkedListCircular<X> data = (BaseLinkedListCircular<X>) obj;
 
         try {
             if (!this.first.getInfo().equals(data.first.getInfo())) return false;
@@ -176,9 +185,9 @@ public class LinkedListCircular<X extends Comparable<X>> implements ILinkedList<
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        LinkedListCircular<X> ret = null;
+        BaseLinkedListCircular<X> ret = null;
         try {
-            ret = new LinkedListCircular<>(this);
+            ret = new BaseLinkedListCircular<>(this);
         }
         catch(Exception ignore) {}
         return ret;
