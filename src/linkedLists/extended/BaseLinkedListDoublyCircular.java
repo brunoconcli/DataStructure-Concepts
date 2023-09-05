@@ -3,9 +3,6 @@ package linkedLists.extended;
 import linkedLists.ILinkedList;
 
 public class BaseLinkedListDoublyCircular<X> implements ILinkedList<X>, Cloneable {
-    
-	 
-	
 	protected class Node <N>{
 		private N info;
 		private Node <N> next, prev;
@@ -78,18 +75,6 @@ public class BaseLinkedListDoublyCircular<X> implements ILinkedList<X>, Cloneabl
 			if (this.next != data.next) return false;
 
 			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = 2;
-			
-			hash = 3*hash + this.info.hashCode();	
-			if (this.next != null) hash = 3*hash + this.next.hashCode();
-			if (this.prev != null) hash = 3*hash + this.prev.hashCode();
-		
-			if (hash < 0) hash = -hash;
-			return hash;
 		}
 	}
 

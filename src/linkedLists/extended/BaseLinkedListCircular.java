@@ -3,7 +3,6 @@ package linkedLists.extended;
 import linkedLists.ILinkedList;
 
 public class BaseLinkedListCircular<X> implements ILinkedList<X>, Cloneable {
-    
     protected class Node <N>{
         private N info;
         private Node <N> next;
