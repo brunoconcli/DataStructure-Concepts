@@ -2,7 +2,7 @@ package linkedLists.extended;
 
 import linkedLists.ILinkedList;
 
-public class BaseLinkedListDoublyLinked<X> implements ILinkedList<X>, Cloneable {
+public class BaseLinkedListDoubly<X> implements ILinkedList<X>, Cloneable {
     protected class Node <N>{
         private N info;
         private Node <N> next, prev;
@@ -81,9 +81,9 @@ public class BaseLinkedListDoublyLinked<X> implements ILinkedList<X>, Cloneable 
     protected Node<X> first, last;
     protected int size = 0;
 
-    public BaseLinkedListDoublyLinked() {}
+    public BaseLinkedListDoubly() {}
 
-    public BaseLinkedListDoublyLinked(BaseLinkedListDoublyLinked<X> model) throws Exception {
+    public BaseLinkedListDoubly(BaseLinkedListDoubly<X> model) throws Exception {
         if (model == null) 
             throw new Exception("The model object passed cannot be null");
         this.first = model.first;
@@ -177,9 +177,9 @@ public class BaseLinkedListDoublyLinked<X> implements ILinkedList<X>, Cloneable 
 
     @Override
     public Object clone() {
-        BaseLinkedListDoublyLinked<X> ret = null;
+        BaseLinkedListDoubly<X> ret = null;
         try {
-            ret = new BaseLinkedListDoublyLinked<>(this);
+            ret = new BaseLinkedListDoubly<>(this);
         }
         catch(Exception ignored) {}
 
@@ -195,7 +195,7 @@ public class BaseLinkedListDoublyLinked<X> implements ILinkedList<X>, Cloneable 
         if (this.getClass() != obj.getClass()) return false;
 
         try {
-            BaseLinkedListDoublyLinked<X> data = (BaseLinkedListDoublyLinked<X>) obj;
+            BaseLinkedListDoubly<X> data = (BaseLinkedListDoubly<X>) obj;
             if (!this.first.getInfo().equals(data.first.getInfo())) return false; // should it be !equals() or !=?
             if (!this.last.getInfo().equals(data.last.getInfo())) return false;
             if (this.size != data.size) return false;
