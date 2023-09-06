@@ -1,6 +1,6 @@
 package linkedLists.ordered;
-import linkedLists.extended.BaseLinkedListDoublyLinked;
+import linkedLists.extended.BaseLinkedListDoubly;
 
-public class LinkedListDoublyLinkedOrdered<X extends Comparable<X>> extends BaseLinkedListDoublyLinked<X> {
+public class LinkedListDoublyOrdered<X extends Comparable<X>> extends BaseLinkedListDoubly<X> {
     
 }
