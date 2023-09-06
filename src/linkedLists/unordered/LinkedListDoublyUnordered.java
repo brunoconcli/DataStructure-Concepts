@@ -1,7 +1,7 @@
 package linkedLists.unordered;
-import linkedLists.extended.BaseLinkedListDoublyLinked;
+import linkedLists.extended.BaseLinkedListDoubly;
 
-public class LinkedListDoublyLinkedUnordered<X> extends BaseLinkedListDoublyLinked<X> {
+public class LinkedListDoublyUnordered<X> extends BaseLinkedListDoubly<X> {
     
     public void addFirst(X info) throws Exception {
         if (info == null) throw new Exception("Information passed must not be null");
