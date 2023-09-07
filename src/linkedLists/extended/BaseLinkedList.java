@@ -59,6 +59,28 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     protected int size = 0;
 
     public BaseLinkedList() {}
+    
+    public BaseLinkedList(X[] list) throws Exception {
+        if (list == null) throw new Exception ("List passed must not be null");
+        if (list.length == 0)  throw new Exception ("List's lenght must be greater than zero");
+
+        this.size = list.length;
+
+        if (list.length == 1) {
+            this.first = this.last = new Node<X>(list[0], null);
+            return;
+        }
+        this.first = new Node<X>(list[0], null);
+        this.last = new Node<X>(list[list.length - 1], null);
+
+        Node<X> current = this.first;
+        for(int i = 1; i < list.length - 1; i++) {
+            current.setNext(new Node<X>(list[i], null));
+            current = current.getNext();
+        }
+        current.setNext(this.last);
+    }
+    
     protected BaseLinkedList(BaseLinkedList<X> model) throws Exception {
         if (model == null)
             throw new Exception("Model list in copy constructor cannot be null");
