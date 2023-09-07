@@ -52,6 +52,5 @@ public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X
 	this.last = this.last.getNext();
 
 	this.size++;
-	return;
     }
 }
