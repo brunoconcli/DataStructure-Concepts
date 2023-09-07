@@ -15,10 +15,10 @@ public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X
         if (info == null) throw new Exception("Info passed must not be null");
 
         if (this.first == null) {
-			this.first = new Node<X>(info, null);
-       		this.last = this.first;
-			this.size++;
-            return;
+		this.first = this.last = new Node<X>(info, null);
+       		
+		this.size++;
+            	return;
         }
 
 	if (this.first.getInfo().compareTo(info) > 0) {
