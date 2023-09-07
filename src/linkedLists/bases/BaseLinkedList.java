@@ -1,4 +1,4 @@
-package linkedLists.extended;
+package linkedLists.bases;
 import linkedLists.*; // put class Node inside each class
 public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     protected class Node <N>{

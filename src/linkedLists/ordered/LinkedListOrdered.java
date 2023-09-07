@@ -1,5 +1,5 @@
 package linkedLists.ordered;
-import linkedLists.extended.BaseLinkedList;
+import linkedLists.bases.BaseLinkedList;
 public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X> {
     public LinkedListOrdered() {}
 

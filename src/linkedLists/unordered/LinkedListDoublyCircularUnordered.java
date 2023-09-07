@@ -1,5 +1,5 @@
 package linkedLists.unordered;
-import linkedLists.extended.BaseLinkedListDoublyCircular;
+import linkedLists.bases.BaseLinkedListDoublyCircular;
 
 public class LinkedListDoublyCircularUnordered<X> extends BaseLinkedListDoublyCircular<X> {
     public void addFirst(X info) throws Exception {

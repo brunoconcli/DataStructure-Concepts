@@ -1,5 +1,5 @@
 package linkedLists.unordered;
-import linkedLists.extended.BaseLinkedList;
+import linkedLists.bases.BaseLinkedList;
 
 public class LinkedListUnordered<X> extends BaseLinkedList<X> {
     public void addFirst(X info) throws Exception {

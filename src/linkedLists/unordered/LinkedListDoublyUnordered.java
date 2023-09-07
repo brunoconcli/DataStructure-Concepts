@@ -1,5 +1,5 @@
 package linkedLists.unordered;
-import linkedLists.extended.BaseLinkedListDoubly;
+import linkedLists.bases.BaseLinkedListDoubly;
 
 public class LinkedListDoublyUnordered<X> extends BaseLinkedListDoubly<X> {
     

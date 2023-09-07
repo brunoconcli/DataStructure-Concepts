@@ -1,4 +1,4 @@
-package linkedLists.extended;
+package linkedLists.bases;
 
 import linkedLists.ILinkedList;
 

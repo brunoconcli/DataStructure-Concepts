@@ -1,5 +1,5 @@
 package linkedLists.ordered;
-import linkedLists.extended.BaseLinkedListDoublyCircular;
+import linkedLists.bases.BaseLinkedListDoublyCircular;
 
 public class LinkedListDoublyCircularOrdered<X extends Comparable<X>> extends BaseLinkedListDoublyCircular<X> {
 	public void add(X info) throws Exception {

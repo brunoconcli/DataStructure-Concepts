@@ -1,5 +1,5 @@
 package linkedLists.ordered;
-import linkedLists.extended.BaseLinkedListDoubly;
+import linkedLists.bases.BaseLinkedListDoubly;
 
 public class LinkedListDoublyOrdered<X extends Comparable<X>> extends BaseLinkedListDoubly<X> {
 	// Search different types of exception and when to use 'em	

@@ -1,5 +1,5 @@
 package linkedLists.unordered;
-import linkedLists.extended.BaseLinkedListCircular;
+import linkedLists.bases.BaseLinkedListCircular;
 
 public class LinkedListCircularUnordered<X> extends BaseLinkedListCircular<X> {
     
