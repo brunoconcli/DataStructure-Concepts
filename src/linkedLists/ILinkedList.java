@@ -1,6 +1,8 @@
 package linkedLists;
 
 public interface ILinkedList<X> {
+    public X getElementAt(int index) throws Exception;
+    
     public boolean isEmpty();
     
     public int getSize();
