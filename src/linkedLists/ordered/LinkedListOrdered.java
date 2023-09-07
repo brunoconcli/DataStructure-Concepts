@@ -1,10 +1,6 @@
 package linkedLists.ordered;
 import linkedLists.extended.BaseLinkedList;
 public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X> {
-
-    private Node<X> first, last;
-    private int size = 0;
-
     public LinkedListOrdered() {}
 
     protected LinkedListOrdered(LinkedListOrdered<X> model) throws Exception {
@@ -58,6 +54,4 @@ public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X
 	this.size++;
 	return;
     }
-
-
 }
