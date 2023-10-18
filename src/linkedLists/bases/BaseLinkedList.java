@@ -1,29 +1,29 @@
 package linkedLists.bases;
 import linkedLists.*; // put class Node inside each class
 public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
-    protected class Node <N>{
-        private N info;
-        private Node <N> next;
-        public Node (N info) {
+    protected class Node {
+        private X info;
+        private Node  next;
+        public Node (X info) {
             this.info = info;
             this.next = null;
         }
-        public Node (N info, Node <N> next) {
+        public Node (X info, Node  next) {
             this.info = info;
             this.next = next;
         }
-        public N getInfo() throws Exception {
+        public X getInfo() throws Exception {
             if (this.info == null)
                 throw new Exception("Node is empty");
             return this.info;
         }
-        public Node<N> getNext() {
+        public Node getNext() {
             return this.next;
         }
-        public void setInfo(N info) {
+        public void setInfo(X info) {
             this.info = info;
         }
-        public void setNext(Node <N> next) {
+        public void setNext(Node  next) {
             this.next = next;
         }
         @Override
@@ -47,7 +47,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
 
             if (this.getClass() != obj.getClass()) return false;
 
-            Node<N> data = (Node<N>)obj;
+            Node data = (Node)obj;
             if (this.info != data.info) return false;
             if (this.next != data.next) return false;
 
@@ -55,7 +55,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
         }
     }
 
-    protected Node<X> first, last;
+    protected Node first, last;
     protected int size = 0;
 
     public BaseLinkedList() {}
@@ -67,15 +67,15 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
         this.size = list.length;
 
         if (list.length == 1) {
-            this.first = this.last = new Node<X>(list[0], null);
+            this.first = this.last = new Node(list[0], null);
             return;
         }
-        this.first = new Node<X>(list[0], null);
-        this.last = new Node<X>(list[list.length - 1], null);
+        this.first = new Node(list[0], null);
+        this.last = new Node(list[list.length - 1], null);
 
-        Node<X> current = this.first;
+        Node current = this.first;
         for(int i = 1; i < list.length - 1; i++) {
-            current.setNext(new Node<X>(list[i], null));
+            current.setNext(new Node(list[i], null));
             current = current.getNext();
         }
         current.setNext(this.last);
@@ -95,7 +95,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
 
     public X getElementAt(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
-        Node<X> current = this.first;
+        Node current = this.first;
         for (int i = 0; i < index; i ++) 
             current = current.getNext();
         
@@ -116,7 +116,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     }
 
     public void removeFirstElementWithInfo(X info) throws Exception {
-        Node<X> current = this.first, previous = null;
+        Node current = this.first, previous = null;
         while (current.getInfo() != info) {
             previous = current;
             current = current.getNext();
@@ -129,7 +129,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     }
 
     public void removeAllElementsWithInfo(X info) throws Exception {
-        Node<X> current = this.first, previous = null;
+        Node current = this.first, previous = null;
         for (int i = 0; i < this.getSize(); i++) {
             if (current.getInfo() == info) {
                 if (current == this.first) {
@@ -157,7 +157,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     public void removeInto(int index) throws Exception {
         if (index < 0 || index >= this.getSize()) throw new Exception("Index passed must be between 0 and the list's length (" + this.getSize() + ")");
 
-        Node<X> current = this.first, previous = null;
+        Node current = this.first, previous = null;
 
         if (index != 0) {
             for (int i = 0; i < index; i++) {
@@ -188,7 +188,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
     @Override
     public String toString() {
         StringBuilder message = new StringBuilder();
-        for (Node<X> current = this.first; current != null; current = current.getNext()) {
+        for (Node current = this.first; current != null; current = current.getNext()) {
             try {
                 message.append(current.getInfo().toString());
                 if (current.getNext() != null) message.append(", ");
@@ -223,7 +223,7 @@ public class BaseLinkedList<X> implements ILinkedList<X>, Cloneable {
             if (!this.first.getInfo().equals(data.first.getInfo())) return false;
             if (!this.last.getInfo().equals(data.last.getInfo())) return false;
             if (this.size != data.size) return false;
-            Node<X> currentThis = this.first, currentData = data.first;
+            Node currentThis = this.first, currentData = data.first;
 
             for (int i = 0; i < this.getSize(); i++) {
                 if (!currentThis.getInfo().equals(currentData.getInfo())) return false;
