@@ -1,3 +1,4 @@
+import linkedLists.ordered.LinkedListOrdered;
 public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	
 	private class Node implements Cloneable, Comparable<X> {
@@ -57,7 +58,7 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	}
 
 	private Node root;
-	private int size = 0;
+	private int height = 0, size = 0;
 
 	public void add(X info) throws Exception {
 		if (info == null) throw new Exception("Info passed must not be null");
@@ -65,27 +66,54 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 			this.root = new Node(info);
 			return;
 		}
-		Node current = this.root;
+		Node current = this.root, previous = null;
 		int comparison = info.compareTo(current.getInfo());
 		
 		for (;;) {
 			if (comparison == 0) throw new Exception("Info passed already exists");
 			if (comparison < 0) {
 				if (current == null) break;
+				previous = current;
 				current = current.getLeft();
 			}
 			else {
 				if (current == null) break;
+				previous = current;
 				current = current.getRight();
 			}
 
 			comparison = info.compareTo(current.getInfo());
 		}
+		if (previous.getLeft() == null && previous.getRight() == null) {
+			this.height ++;
+		}
 		current = new Node(info);
 		this.size ++;
 	}
 
+	
 	public boolean alreadyExists(X info) {
+		if (info == null) return false;
+		if (this.root == null) return false;
+
+		Node current = this.root;
+		int comparison;
+		while (current != null) {
+			comparison = current.compareTo(info);
+			if (comparison == 0) 
+				return true;
+			if (comparison < 0)
+				current = current.getLeft();
+			else 
+				current = current.getRight();
+		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		LinkedListOrdered<X> arrayRepresentation = new LinkedListOrdered<>();
+
+		return "";
 	}
 }
