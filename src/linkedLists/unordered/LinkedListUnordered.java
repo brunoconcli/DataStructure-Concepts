@@ -1,7 +1,24 @@
 package linkedLists.unordered;
 import linkedLists.bases.BaseLinkedList;
+import linkedLists.ordered.LinkedListOrdered;
 
-public class LinkedListUnordered<X> extends BaseLinkedList<X> {
+public class LinkedListUnordered<X extends Comparable<X>> extends BaseLinkedList<X> {
+    public LinkedListOrdered<X> getOrdered() {
+        LinkedListOrdered<X> orderedList = new LinkedListOrdered<>();
+        
+        try {
+            Node current = this.first;
+            while(current != null) {
+                orderedList.add(current.getInfo());
+                current = current.getNext();
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return orderedList;
+    }
+    
     public void addFirst(X info) throws Exception {
         if (info == null)
             throw new Exception("Information passed must not be null");
