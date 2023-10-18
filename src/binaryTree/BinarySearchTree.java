@@ -1,4 +1,6 @@
 import linkedLists.ordered.LinkedListOrdered;
+import linkedLists.unordered.LinkedListUnordered;
+import stackAndQueue.Stack;
 public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	
 	private class Node implements Cloneable, Comparable<X> {
@@ -91,6 +93,42 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		this.size ++;
 	}
 
+	public LinkedListOrdered<X> preorderTest(Node node) {
+
+	}
+	// public LinkedListOrdered<X> getOrderedArray() {
+	// 	// add nodes in the increasing order
+	// 	try {
+	// 		LinkedListOrdered<X> orderedArray = new LinkedListOrdered<>();
+	// 		Stack<X> stack = new Stack<>();
+	// 		Node current = this.root, previous = null;
+
+	// 		while (true) {
+	// 			if (current != null) {
+	// 				stack.push(current.getInfo());
+	// 				current = current.getLeft();
+	// 			}
+	// 		}
+	// 	}
+	// 	catch (Exception e) {
+	// 		System.out.println(e.getMessage());
+	// 	}
+	// }
+
+	public LinkedListUnordered<X> getPreorderedArray() {
+		// add nodes as they're visited for the first time
+		return new LinkedListUnordered<>();
+	}
+
+	public LinkedListUnordered<X> getPostOrderedArray() {
+		// add nodes as they're visited for the third time
+		return new LinkedListUnordered<>();
+	}
+
+	public LinkedListUnordered<X> getInOrderedArray() {
+		// add nodes as they're visited for the second time
+		return new LinkedListUnordered<>();	
+	}
 	
 	public boolean alreadyExists(X info) {
 		if (info == null) return false;
