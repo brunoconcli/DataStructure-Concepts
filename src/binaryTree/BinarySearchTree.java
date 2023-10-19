@@ -1,6 +1,7 @@
+
 import linkedLists.ordered.LinkedListOrdered;
 import linkedLists.unordered.LinkedListUnordered;
-import stackAndQueue.Stack;
+
 public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	
 	private class Node implements Cloneable, Comparable<X> {
@@ -52,7 +53,7 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 				", " + 
 				this.right.getInfo());
 		}
-
+		
 		@Override
 		public int compareTo(X info) {
 			return 1;
@@ -74,46 +75,38 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		for (;;) {
 			if (comparison == 0) throw new Exception("Info passed already exists");
 			if (comparison < 0) {
-				if (current == null) break;
 				previous = current;
 				current = current.getLeft();
 			}
 			else {
-				if (current == null) break;
 				previous = current;
 				current = current.getRight();
 			}
 
+			if (current == null) break;
 			comparison = info.compareTo(current.getInfo());
 		}
 		if (previous.getLeft() == null && previous.getRight() == null) {
 			this.height ++;
 		}
 		current = new Node(info);
+		if (previous.getInfo().compareTo(current.getInfo()) < 0) previous.setRight(current);
+		else previous.setLeft(current);
 		this.size ++;
 	}
 
-	public LinkedListOrdered<X> preorderTest(Node node) {
-
+	LinkedListOrdered<X> orderedArray = new LinkedListOrdered<>();
+	public String getOrderedArray() throws Exception {
+		createOrderedArray(this.root);
+		return this.orderedArray.toString();
 	}
-	// public LinkedListOrdered<X> getOrderedArray() {
-	// 	// add nodes in the increasing order
-	// 	try {
-	// 		LinkedListOrdered<X> orderedArray = new LinkedListOrdered<>();
-	// 		Stack<X> stack = new Stack<>();
-	// 		Node current = this.root, previous = null;
 
-	// 		while (true) {
-	// 			if (current != null) {
-	// 				stack.push(current.getInfo());
-	// 				current = current.getLeft();
-	// 			}
-	// 		}
-	// 	}
-	// 	catch (Exception e) {
-	// 		System.out.println(e.getMessage());
-	// 	}
-	// }
+	private void createOrderedArray(Node node) throws Exception {
+		if (node == null) return;
+		orderedArray.add(node.getInfo());
+		createOrderedArray(node.getLeft());
+		createOrderedArray(node.getRight());
+	}
 
 	public LinkedListUnordered<X> getPreorderedArray() {
 		// add nodes as they're visited for the first time
