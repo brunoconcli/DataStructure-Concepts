@@ -1,4 +1,4 @@
-
+package binaryTree;
 import linkedLists.ordered.LinkedListOrdered;
 import linkedLists.unordered.LinkedListUnordered;
 
@@ -96,16 +96,39 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	}
 
 	LinkedListOrdered<X> orderedArray = new LinkedListOrdered<>();
-	public String getOrderedArray() throws Exception {
-		createOrderedArray(this.root);
-		return this.orderedArray.toString();
+	
+	// private void getOrderedArray(Node node) throws Exception {
+	// 	if (node == null) return;
+	// 	orderedArray.add(node.getInfo());
+	// 	getOrderedArray(node.getLeft());
+	// 	getOrderedArray(node.getRight());
+	// }
+	
+	// public String getOrderedArray() throws Exception {
+	// 	orderedArray.removeAllElements();
+	// 	getOrderedArray(this.root);
+	// 	return this.orderedArray.toString();
+	// }
+
+	private LinkedListOrdered<X> getOrderedArray(Node root) throws Exception {
+		LinkedListOrdered<X> list = new LinkedListOrdered<>();
+		if (root == null) return new LinkedListOrdered<>();
+		
+		list.add(root.getInfo());
+		return list.addList(getOrderedArray(root.getLeft())).addList(getOrderedArray(root.getRight()));
 	}
 
-	private void createOrderedArray(Node node) throws Exception {
-		if (node == null) return;
-		orderedArray.add(node.getInfo());
-		createOrderedArray(node.getLeft());
-		createOrderedArray(node.getRight());
+	public String getOrderedArray() throws Exception {
+		return this.getOrderedArray(this.root).toString();
+	}
+
+	private int getSize(Node root) {
+		if (root == null) return 0;
+		return 1 + (this.getSize(root.getLeft()) + this.getSize(root.getRight()));
+	}
+
+	public int getSize() {
+		return this.getSize(this.root);
 	}
 
 	public LinkedListUnordered<X> getPreorderedArray() {

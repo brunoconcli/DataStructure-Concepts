@@ -1,3 +1,5 @@
+import binaryTree.BinarySearchTree;
+import linkedLists.ordered.LinkedListOrdered;
 public class Main  {
 	public static void main(String[] args) {
 		try {
@@ -13,9 +15,10 @@ public class Main  {
 			tree.add(15);
 			tree.add(17);
 
+			// System.out.println(tree.getOrderedArray());
+			System.out.println(tree.getSize());
 			System.out.println(tree.getOrderedArray());
 		}
-		
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
