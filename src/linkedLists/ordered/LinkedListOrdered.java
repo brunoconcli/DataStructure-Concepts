@@ -53,4 +53,15 @@ public class LinkedListOrdered<X extends Comparable<X>> extends BaseLinkedList<X
 
 	this.size++;
     }
+
+	public LinkedListOrdered<X> addList(LinkedListOrdered<X> list) throws Exception {
+		if (list == null) throw new Exception ("List to be added must not be null");
+		if (list.getSize() == 0) return this;
+		Node current = list.first;
+		for (int i = 0; i < list.getSize(); i++) {
+			this.add(list.getElementAt(i));
+			current = current.getNext();
+		}
+		return this;
+	}
 }
