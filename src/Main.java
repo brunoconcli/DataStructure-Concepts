@@ -3,21 +3,21 @@ import linkedLists.ordered.LinkedListOrdered;
 public class Main  {
 	public static void main(String[] args) {
 		try {
-			BinarySearchTree<Integer> tree = new BinarySearchTree<>(); 
+			BinarySearchTree<Integer> uno = new BinarySearchTree<>(); 
 
-			tree.add(10);
-			tree.add(5);
-			tree.add(6);
-			tree.add(2);
-			tree.add(1);
-			tree.add(3);
-			tree.add(12);
-			tree.add(15);
-			tree.add(17);
+			uno.add(10);
+			uno.add(5);
+			uno.add(6);
+			uno.add(2);
+			uno.add(1);
+			uno.add(3);
+			uno.add(12);
+			uno.add(15);
+			uno.add(17);
+			BinarySearchTree<Integer> dos = null; 
+			
 
-			// System.out.println(tree.getOrderedArray());
-			System.out.println(tree.getSize());
-			System.out.println(tree.getOrderedArray());
+			System.out.println(uno.equals(dos));
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
