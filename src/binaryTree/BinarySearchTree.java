@@ -156,12 +156,12 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		return "";
 	}
 
-	// private boolean equals(Node thisRoot, Node modelRoot) {
-	// 	if (thisRoot.getInfo() != modelRoot.getInfo()) return false;
-	// 	if (thisRoot.getInfo() == modelRoot.getInfo() && thisRoot.getInfo() == null) return true;
+	private boolean equals(Node thisRoot, Node modelRoot) {
+		if (thisRoot.compareTo(modelRoot.getInfo()) != 0) return false;
+		if (thisRoot.getInfo() == modelRoot.getInfo() && thisRoot.getInfo() == null) return true;
 
-	// 	return this.equals(thisRoot.getLeft(), modelRoot.getLeft());
-	// }
+		return this.equals(thisRoot.getLeft(), modelRoot.getLeft());
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
