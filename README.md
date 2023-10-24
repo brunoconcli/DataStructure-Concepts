@@ -26,3 +26,27 @@ public String getOrderedArray() throws Exception {
     getOrderedArray(this.root);
     return this.orderedArray.toString();
 }
+
+## Old equals using 
+// equals using linkedListOrered's equals()
+@Override
+@SuppressWarnings("unchecked")
+public boolean equals(Object obj) {
+	try {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (this.getClass() != obj.getClass()) return false;
+			
+		BinarySearchTree<X> model = (BinarySearchTree<X>) obj;
+			
+		if (this.root.getInfo().compareTo(model.root.getInfo()) != 0) return false;
+		if (this.size != model.size) return false;
+		if (this.height != model.height) return false;
+
+		return (this.getOrderedArray(this.root).equals(model.getOrderedArray(model.root)));
+	}
+	catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+	return false;
+}

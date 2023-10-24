@@ -1,23 +1,20 @@
 import binaryTree.BinarySearchTree;
-import linkedLists.ordered.LinkedListOrdered;
 public class Main  {
 	public static void main(String[] args) {
 		try {
+			int[] numberSet = {10, 5, 6, 2, 1, 3, 12, 15, 17};
 			BinarySearchTree<Integer> uno = new BinarySearchTree<>(); 
-
-			uno.add(10);
-			uno.add(5);
-			uno.add(6);
-			uno.add(2);
-			uno.add(1);
-			uno.add(3);
-			uno.add(12);
-			uno.add(15);
-			uno.add(17);
-			BinarySearchTree<Integer> dos = null; 
+			BinarySearchTree<Integer> dos = new BinarySearchTree<>(); 
 			
-
-			System.out.println(uno.equals(dos));
+			double begin = System.currentTimeMillis();
+			for (int i = 0; i < 100000; i++) {
+				uno.add(i);
+				dos.add(i);
+			}
+			
+			double end = System.currentTimeMillis();
+			// System.out.println(uno.equals(dos));
+			System.out.println((end - begin)/1000);
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());

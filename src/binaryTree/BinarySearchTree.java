@@ -157,31 +157,23 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 	}
 
 	private boolean equals(Node thisRoot, Node modelRoot) {
-		if (thisRoot.compareTo(modelRoot.getInfo()) != 0) return false;
-		if (thisRoot.getInfo() == modelRoot.getInfo() && thisRoot.getInfo() == null) return true;
+		if (thisRoot == modelRoot && thisRoot == null) return true;
+		if (thisRoot.getInfo().compareTo(modelRoot.getInfo()) != 0) return false;
 
 		return this.equals(thisRoot.getLeft(), modelRoot.getLeft());
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	
 	public boolean equals(Object obj) {
-		try {
-			if (this == obj) return true;
-			if (obj == null) return false;
-			if (this.getClass() != obj.getClass()) return false;
-			
-			BinarySearchTree<X> model = (BinarySearchTree<X>) obj;
-			
-			if (this.root.getInfo() != model.root.getInfo()) return false;
-			if (this.size != model.size) return false;
-			if (this.height != model.height) return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
 
-			return (this.getOrderedArray(this.root).equals(model.getOrderedArray(model.root)));
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return false;
+		if (this.getClass() != obj.getClass()) return false;
+		BinarySearchTree<X> tree = (BinarySearchTree) obj;
+		if (this.size != tree.size) return false;
+		if (this.height != tree.height) return false;
+
+		return this.equals(this.root, tree.root);
 	}
 }
