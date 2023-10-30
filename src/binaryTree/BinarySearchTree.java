@@ -149,22 +149,38 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		return false;
 	}
 
+	// private String toString(Node root) {
+	// 	if (root == null) return "";
+
+	// 	return ("(" + this.toString(root.getLeft()) + ")" +
+	// 					"(" + root.getInfo() + ")" + 
+	// 					"(" + this.toString(root.getRight()) + ")"
+	// 	);
+	// }
+	private String toString(Node root) {
+		String left = "";
+		String right = "";
+		if (root.getLeft() != null)
+			left = "("+this.toString(root.getLeft())+")";
+		if (root.getRight() != null)
+			right = "("+this.toString(root.getRight())+")";	
+
+		return (left+"(" + root.getInfo() + ")"+right);
+	}
+
 	@Override
 	public String toString() {
-		LinkedListOrdered<X> arrayRepresentation = new LinkedListOrdered<>();
-
-		return "";
+		return this.toString(this.root);
 	}
 
 	private boolean equals(Node thisRoot, Node modelRoot) {
 		if (thisRoot == modelRoot && thisRoot == null) return true;
 		if (thisRoot.getInfo().compareTo(modelRoot.getInfo()) != 0) return false;
 
-		return this.equals(thisRoot.getLeft(), modelRoot.getLeft());
+		return this.equals(thisRoot.getLeft(), modelRoot.getLeft()) && this.equals(thisRoot.getRight(), modelRoot.getRight());
 	}
 
 	@Override
-	
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
