@@ -95,6 +95,14 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		this.size ++;
 	}
 
+	// when removing, there are three conditions:
+		// remove root: another node must be found to fit its place
+		// remove a leaf: only that leaf is removed
+		// remove a node that contains children: another node must be found to fit its place 
+	public void remove(X info) {
+
+	}
+
 	private LinkedListOrdered<X> getOrderedArray(Node root) throws Exception {
 		LinkedListOrdered<X> list = new LinkedListOrdered<>();
 		if (root == null) return new LinkedListOrdered<>();
@@ -149,14 +157,6 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		return false;
 	}
 
-	// private String toString(Node root) {
-	// 	if (root == null) return "";
-
-	// 	return ("(" + this.toString(root.getLeft()) + ")" +
-	// 					"(" + root.getInfo() + ")" + 
-	// 					"(" + this.toString(root.getRight()) + ")"
-	// 	);
-	// }
 	private String toString(Node root) {
 		String left = "";
 		String right = "";
