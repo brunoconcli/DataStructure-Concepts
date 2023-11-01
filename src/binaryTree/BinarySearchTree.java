@@ -94,10 +94,6 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		else previous.setLeft(current);
 		this.size ++;
 	}
-
-	private void removeOneChild(Node root) {
-
-	}
 	// three cases for removing:
 		// node is a leaf - tree not affected
 		// node has one child - its antecedent's pointer is redirected to the node's child 
@@ -108,14 +104,13 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		Node current = this.root, previous = null;
 		int compare = info.compareTo(current.getInfo());
 		for (;;) {
-			if (current == null) throw new Exception ("Information passed has not been found");
 			if (compare == 0) {
 				if (current.getLeft() == null && current.getRight() == null) {
 					if (previous != null) { 
 						if (previous.getLeft().getInfo().compareTo(current.getInfo()) == 0) 
-							previous.setLeft(null);
+						previous.setLeft(null);
 						else
-							previous.setRight(null);
+						previous.setRight(null);
 					}
 					if (this.root == current) 
 						this.root = null;
@@ -147,35 +142,38 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 					this.size -= 1;
 					return;
 				}
-				
-				Node currentSearch = current.getRight();
-				while (currentSearch.getLeft() != null) {
-					currentSearch = currentSearch.getLeft();
+				if (current.getLeft() != null & current.getRight() != null) {
+					Node currentSearch = current.getRight();
+					while (currentSearch.getLeft() != null) {
+						currentSearch = currentSearch.getLeft();
+					}
+					this.remove(currentSearch.getInfo());
+					current.setInfo(currentSearch.getInfo());
+					return;
 				}
-				current.setInfo(currentSearch.getInfo());
-				this.remove(currentSearch.getInfo());
 			}
 			previous = current;
 			if (compare < 0) {
 				current = current.getLeft();
 			}
-			if (compare > 0) {
-				current.getRight();
+			else {
+				current = current.getRight();
 			}
+			if (current == null) throw new Exception ("Information passed has not been found");
 			compare = info.compareTo(current.getInfo());
 		}
 	}
 
-	private LinkedListOrdered<X> getOrderedArray(Node root) throws Exception {
+	private LinkedListOrdered<X> getOrderedLinkedList(Node root) throws Exception {
 		LinkedListOrdered<X> list = new LinkedListOrdered<>();
 		if (root == null) return new LinkedListOrdered<>();
 		
 		list.add(root.getInfo());
-		return list.addList(getOrderedArray(root.getLeft())).addList(getOrderedArray(root.getRight()));
+		return list.addList(getOrderedLinkedList(root.getLeft())).addList(getOrderedLinkedList(root.getRight()));
 	}
 
-	public String getOrderedArray() throws Exception {
-		return this.getOrderedArray(this.root).toString();
+	public String getOrderedLinkedList() throws Exception {
+		return this.getOrderedLinkedList(this.root).toString();
 	}
 
 	private int getSize(Node root) {

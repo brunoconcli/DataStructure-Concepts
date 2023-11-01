@@ -12,12 +12,16 @@ public class Main  {
 				dos.add(numberSet[i]);
 			}
 			
-			dos.add(7);
-			double end = System.currentTimeMillis();
-			System.out.println(uno.equals(dos));
-			System.out.println((end - begin)/1000);
-
+			// double end = System.currentTimeMillis();
+			
 			System.out.println(uno.toString());
+			uno.remove(2);
+			System.out.println(uno.toString());
+			uno.remove(3);
+			System.out.println(uno.toString());
+
+			// System.out.println((end - begin)/1000);
+
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
