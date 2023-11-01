@@ -95,12 +95,75 @@ public class BinarySearchTree<X extends Comparable<X>> implements Cloneable {
 		this.size ++;
 	}
 
-	// when removing, there are three conditions:
-		// remove root: another node must be found to fit its place
-		// remove a leaf: only that leaf is removed
-		// remove a node that contains children: another node must be found to fit its place 
-	public void remove(X info) {
+	private void removeOneChild(Node root) {
 
+	}
+	// three cases for removing:
+		// node is a leaf - tree not affected
+		// node has one child - its antecedent's pointer is redirected to the node's child 
+		// node has two children - last node in the node.getRight()'s left replaces the node 
+	public void remove(X info) throws Exception {
+		if (info == null) throw new Exception ("Information passed must not be null");
+
+		Node current = this.root, previous = null;
+		int compare = info.compareTo(current.getInfo());
+		for (;;) {
+			if (current == null) throw new Exception ("Information passed has not been found");
+			if (compare == 0) {
+				if (current.getLeft() == null && current.getRight() == null) {
+					if (previous != null) { 
+						if (previous.getLeft().getInfo().compareTo(current.getInfo()) == 0) 
+							previous.setLeft(null);
+						else
+							previous.setRight(null);
+					}
+					if (this.root == current) 
+						this.root = null;
+					current = null;
+					this.size -= 1;
+					return;
+				}
+				
+				if (current.getLeft() != null && current.getRight() == null) {
+					if (previous != null) { 
+						if (previous.getLeft().getInfo().compareTo(current.getInfo()) == 0) 
+							previous.setLeft(current.getLeft());
+						else
+							previous.setRight(current.getLeft());
+					}
+					current = null;
+					this.size -= 1;
+					return;
+				}
+				
+				if (current.getLeft() == null && current.getRight() != null) {
+					if (previous != null) { 
+						if (previous.getLeft().getInfo().compareTo(current.getInfo()) == 0) 
+							previous.setLeft(current.getRight());
+						else
+							previous.setRight(current.getRight());
+					}
+					current = null;
+					this.size -= 1;
+					return;
+				}
+				
+				Node currentSearch = current.getRight();
+				while (currentSearch.getLeft() != null) {
+					currentSearch = currentSearch.getLeft();
+				}
+				current.setInfo(currentSearch.getInfo());
+				this.remove(currentSearch.getInfo());
+			}
+			previous = current;
+			if (compare < 0) {
+				current = current.getLeft();
+			}
+			if (compare > 0) {
+				current.getRight();
+			}
+			compare = info.compareTo(current.getInfo());
+		}
 	}
 
 	private LinkedListOrdered<X> getOrderedArray(Node root) throws Exception {
